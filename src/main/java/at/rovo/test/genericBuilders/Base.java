@@ -2,7 +2,9 @@ package at.rovo.test.genericBuilders;
 
 public abstract class Base<Z>
 {
-    public static abstract class Builder<B extends Builder<? extends B, Z>, Z>
+    public static abstract class Builder<T extends Base<Z>,
+                                         B extends Builder<? extends T, ? extends B, Z>,
+                                         Z>
     {
         protected final String a;
         protected final String b;
@@ -23,7 +25,7 @@ public abstract class Base<Z>
             return (B)this;
         }
 
-        public abstract <T> T build();
+        public abstract T build();
     }
 
     protected final String name;

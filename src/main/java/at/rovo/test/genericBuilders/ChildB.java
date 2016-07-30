@@ -1,11 +1,14 @@
 package at.rovo.test.genericBuilders;
 
-@SuppressWarnings({"hiding", "unchecked"})
 public class ChildB<F,G,Z> extends Base<Z>
 {
-    public static class Builder<B extends ChildB.Builder<? extends B, F,G,Z>,
+    @SuppressWarnings("unchecked")
+    public static class Builder<T extends ChildB<F,G,Z>,
+                                B extends ChildB.Builder<? extends T, ? extends B, F,G,Z>,
                                 F,G,Z>
-            extends Base.Builder<ChildB.Builder<B,F,G,Z>, Z>
+            extends Base.Builder<T,
+                                 B,
+                                 Z>
     {
         protected F f;
         protected G g;
@@ -28,9 +31,9 @@ public class ChildB<F,G,Z> extends Base<Z>
         }
 
         @Override
-        public <T> T build()
+        public T build()
         {
-            return (T) new ChildB<>("TestParamB", a, b, c, z, f, g);
+            return (T) new ChildB<>("ChildB", a, b, c, z, f, g);
         }
     }
 

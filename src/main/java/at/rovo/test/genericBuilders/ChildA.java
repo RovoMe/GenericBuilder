@@ -3,9 +3,12 @@ package at.rovo.test.genericBuilders;
 public class ChildA<D,E,Z> extends Base<Z>
 {
     @SuppressWarnings("unchecked")
-    public static class Builder<B extends ChildA.Builder<? extends B, D, E, Z>,
+    public static class Builder<T extends ChildA<D,E,Z>,
+                                B extends ChildA.Builder<? extends T, ? extends B, D, E, Z>,
                                 D,E,Z>
-            extends Base.Builder<ChildA.Builder<B,D,E,Z>, Z>
+            extends Base.Builder<T,
+                                 B,
+                                 Z>
     {
         protected D d;
         protected E e;
@@ -28,9 +31,9 @@ public class ChildA<D,E,Z> extends Base<Z>
         }
 
         @Override
-        public <T> T build()
+        public T build()
         {
-            return (T) new ChildA<>("TestParamA", a, b, c, z, d, e);
+            return (T) new ChildA<>("ChildA", a, b, c, z, d, e);
         }
     }
 
